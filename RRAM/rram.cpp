@@ -8,7 +8,7 @@
 
 void rram::Write_data()
 {
-  if(write && !rst)
+  if(Read_Write && !rst)
       rram_data[addr.read()]=data_in;
 }
 
@@ -65,6 +65,7 @@ void  rram::multiply_data()
 
 void rram::read_data()
 {
+	if(!Read_Write)
     data_out = rram_data[addr.read()];
 }
 

@@ -23,7 +23,7 @@ struct rram : public sc_core::sc_module
 {
   sc_in<bool>   clk;						// Clock input of the design
   sc_in<bool>   rst; 						// Active high, synchronous reset input
-  sc_in<bool>   write;						// Active high, enable write operation
+  sc_in<bool>   Read_Write;					// enable Read if high, enable write if low
   sc_in<bool>   mul_enable;					// Active high, enable multiplication operation
 
   sc_in<sc_uint<DATA_WIDTH>>    data_in;	// 16 bit array, input of a single memory cell data
@@ -36,7 +36,7 @@ struct rram : public sc_core::sc_module
 
   //-----------Methods------------------------------
   void  Write_data ();						// Write/Enter operation of data in one cell
-  void read_data();							// Read/Extract operation of data from one cell
+  void  read_data();							// Read/Extract operation of data from one cell
   void  reset_data ();						// Reset the internal data of the RRAM
 
   sc_uint<2*DATA_WIDTH> multiply_two_cells(sc_uint<DATA_WIDTH>,sc_uint<DATA_WIDTH> );
@@ -48,8 +48,16 @@ struct rram : public sc_core::sc_module
 
   //-----------Constructor--------------------------
   SC_CTOR(rram) {
-      SC_METHOD (Write_data);
+      SC_METHOD (Write_data);  		// register the Write_data as a process with the simulation kernel
       sensitive << clk.pos();
+      sensitive << Read_Write;
+
+      SC_METHOD (read_data);		// register the read_data as a process with the simulation kernel
+
+      SC_METHOD (multiply_data);	// register the multiply_data as a process with the simulation kernel
+      sensitive << mul_enable;
+
+
   }
 
 
