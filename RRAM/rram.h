@@ -1,8 +1,16 @@
+//@Module : RRAM
+//@Author : Ahmed MAHMOUDI
+//@Project : KI-PRO
+//@Date   : 04/01/2021
+
 #ifndef RRAM_RRAM_H_
 #define RRAM_RRAM_H_
 
 
 #include "systemc.h"
+
+using namespace std;
+
 
 
 
@@ -10,27 +18,33 @@
 #define ADDR_WIDTH        8     // 2^8 = 256 --> rram can store 256  cells == 256*16 == 4096 bits
                                 // data space in the chip = 4 kbits
 
-SC_MODULE(rram)
+//SC_MODULE(rram)
+struct rram : public sc_core::sc_module
 {
-  sc_in<bool>   clk;
-  sc_in<bool>   rst;
-  sc_in<bool>   write;
-  sc_in<bool>   mul_enable;
+  sc_in<bool>   clk;						// Clock input of the design
+  sc_in<bool>   rst; 						// Active high, synchronous reset input
+  sc_in<bool>   write;						// Active high, enable write operation
+  sc_in<bool>   mul_enable;					// Active high, enable multiplication operation
 
-  sc_in<sc_uint<DATA_WIDTH>>    data_in;
-  sc_in<sc_uint<ADDR_WIDTH >>    addr;
-  sc_out<sc_uint<DATA_WIDTH>>    data_out;
+  sc_in<sc_uint<DATA_WIDTH>>    data_in;	// 16 bit array, input of a single memory cell data
+  sc_in<sc_uint<ADDR_WIDTH >>   addr;		// 8 bit array, input of the cell address
+  sc_out<sc_uint<DATA_WIDTH>>   data_out;	// 16 bit array, output of a single memory cell data
 
 
   //-----------Internal variables-------------------
-  sc_bv<DATA_WIDTH> rram_data [256];
+  sc_bv<DATA_WIDTH> rram_data [256];		// matrix[256][16], inner data of the RRAM
 
   //-----------Methods------------------------------
-  void  Write_data ();
-  void read_data();
-  void  reset_data ();
-  void  multiply_data();
+  void  Write_data ();						// Write/Enter operation of data in one cell
+  void read_data();							// Read/Extract operation of data from one cell
+  void  reset_data ();						// Reset the internal data of the RRAM
+
   sc_uint<2*DATA_WIDTH> multiply_two_cells(sc_uint<DATA_WIDTH>,sc_uint<DATA_WIDTH> );
+    	  	  	  	  	  	  	  	  	  	// Multiplication algorithm via shifting and addition
+
+  void  multiply_data();					// Multiply operation of each adjacent two cells of the RRAM
+
+
 
   //-----------Constructor--------------------------
   SC_CTOR(rram) {

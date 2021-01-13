@@ -1,3 +1,8 @@
+//@Module : RRAM
+//@Author : Ahmed MAHMOUDI
+//@Project : KI-PRO
+//@Date   : 04/01/2021
+
 #include "rram.h"
 
 
