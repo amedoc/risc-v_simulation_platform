@@ -65,7 +65,7 @@ void  rram::multiply_data()
 
 void rram::read_data()
 {
-	if(!Read_Write)
+	if(Read_Write == false)
     data_out = rram_data[addr.read()];
 }
 

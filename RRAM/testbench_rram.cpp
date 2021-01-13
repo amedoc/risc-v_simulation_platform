@@ -47,43 +47,61 @@ int sc_main( int argc, char* argv[])
 	  rram_test.Read_Write(Read_Write);
 	  rram_test.mul_enable(mul_enable);
 
-	  //sc_start(1);
-
-	  addr=0x00 ; Read_Write = 1; data_in=0x0001; rst=0;
-	  next_cycle (clk);
-	  addr=0x01 ; Read_Write = 1; data_in=0x0002; rst=0;
-	  next_cycle (clk);
-
-	  addr=0x00 ; Read_Write = 0; rst=0;
-	  next_cycle (clk);
-	  addr=0x01 ; Read_Write = 0; rst=0;
-	  next_cycle (clk);
-
-	  addr=0x00 ; Read_Write = 0; rst=1;
-	  next_cycle (clk);
-	  addr=0x01 ; Read_Write = 0;
-	  next_cycle (clk);
-
-	  for (i=0;i<5;i++)
-	  {
-		  next_cycle(clk);
-	  }
-
-
 	  rst=1;
-	  for (i=0;i<5;i++)
-	  {
-		  next_cycle(clk);
-	  }
+	  next_cycle(clk);
 
-	   /* addr=23 ; write = 1; data_in=42;
-	    next_cycle(clk); next_cycle(clk);
-	    write = 0; addr=25 ;
-	    next_cycle(clk);
-	    write = 0; addr=22 ;
-	    next_cycle(clk); next_cycle(clk);
-	    for(i=0; i<17; i++)
-	        next_cycle(clk);*/
+	  Read_Write = 1; // write operation
+	  addr=0x00 ;  data_in=0x0001; rst=0;
+	  for (i=0;i<5;i++)
+		  {
+			  next_cycle(clk);
+		  }
+
+	  addr=0x01 ; data_in=0x0003; rst=0;
+	  for (i=0;i<5;i++)
+		  {
+			  next_cycle(clk);
+		  }
+
+	  addr=0x04 ; data_in=0x0005; rst=0;
+	  for (i=0;i<5;i++)
+	 		  {
+	 			  next_cycle(clk);
+	 		  }
+
+	  addr=0x05 ; data_in=0x0005; rst=0;
+	  for (i=0;i<5;i++)
+	  	 	 {
+	  	 		  next_cycle(clk);
+	  	 	 }
+
+	  addr=0x01 ; Read_Write = 0; rst=0;
+	  for (i=0;i<5;i++)
+	 		  {
+	 			  next_cycle(clk);
+	 		  }
+
+	  addr=0x04 ; rst=0;
+		  for (i=0;i<5;i++)
+		 		  {
+		 			  next_cycle(clk);
+		 		  }
+	 addr=0x05 ; Read_Write = 0; rst=0;
+		  for (i=0;i<5;i++)
+		  		 {
+		  		 	 next_cycle(clk);
+		  		 }
+	 addr=0x05 ; Read_Write = 0; rst=1; // resetting the rram to zero
+		 for (i=0;i<5;i++)
+				 {
+				  	next_cycle(clk);
+				 }
+
+
+
+
+
+
 
 	    sc_close_vcd_trace_file (my_trace_file);
 

@@ -32,11 +32,11 @@ struct rram : public sc_core::sc_module
 
 
   //-----------Internal variables-------------------
-  sc_bv<DATA_WIDTH> rram_data [256];		// matrix[256][16], inner data of the RRAM
+  sc_uint<DATA_WIDTH> rram_data [256];		// matrix[256][16], inner data of the RRAM
 
   //-----------Methods------------------------------
   void  Write_data ();						// Write/Enter operation of data in one cell
-  void  read_data();							// Read/Extract operation of data from one cell
+  void  read_data();						// Read/Extract operation of data from one cell
   void  reset_data ();						// Reset the internal data of the RRAM
 
   sc_uint<2*DATA_WIDTH> multiply_two_cells(sc_uint<DATA_WIDTH>,sc_uint<DATA_WIDTH> );
@@ -50,12 +50,16 @@ struct rram : public sc_core::sc_module
   SC_CTOR(rram) {
       SC_METHOD (Write_data);  		// register the Write_data as a process with the simulation kernel
       sensitive << clk.pos();
-      sensitive << Read_Write;
+      sensitive << Read_Write << rst;
 
       SC_METHOD (read_data);		// register the read_data as a process with the simulation kernel
+      sensitive << Read_Write;
 
       SC_METHOD (multiply_data);	// register the multiply_data as a process with the simulation kernel
       sensitive << mul_enable;
+
+      SC_METHOD (reset_data);	// register the multiply_data as a process with the simulation kernel
+      sensitive << rst;
 
 
   }
