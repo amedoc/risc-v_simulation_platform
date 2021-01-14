@@ -22,9 +22,9 @@ int sc_main( int argc, char* argv[])
 	  sc_signal<bool>   Read_Write;						// Active high, enable write operation
 	  sc_signal<bool>   mul_enable;					// Active high, enable multiplication operation
 
-	  sc_signal<sc_uint<DATA_WIDTH>>    data_in;	// 16 bit array, input of a single memory cell data
-	  sc_signal<sc_uint<ADDR_WIDTH >>   addr;		// 8 bit array, input of the cell address
-	  sc_signal<sc_uint<DATA_WIDTH>>   data_out;	// 16 bit array, output of a single memory cell data
+	  sc_signal<uint16_t>    data_in;	// 16 bit array, input of a single memory cell data
+	  sc_signal<uint8_t>   addr;		// 8 bit array, input of the cell address
+	  sc_signal<uint16_t>   data_out;	// 16 bit array, output of a single memory cell data
 
 
 	  sc_trace_file* my_trace_file;
