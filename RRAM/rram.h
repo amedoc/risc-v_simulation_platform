@@ -54,6 +54,7 @@ struct rram : public sc_core::sc_module
 
       SC_METHOD (read_data);		// register the read_data as a process with the simulation kernel
       sensitive << Read_Write;
+      sensitive << clk.pos();
 
       SC_METHOD (multiply_data);	// register the multiply_data as a process with the simulation kernel
       sensitive << mul_enable;

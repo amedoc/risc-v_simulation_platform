@@ -34,15 +34,16 @@ sc_uint<2*DATA_WIDTH> rram::multiply_two_cells(sc_uint<DATA_WIDTH> cell_1 ,sc_ui
 
     while( cell_2 != 0)
     {
-        if(cell_2 & 1)
+        if((cell_2 & 1) != 0)
         {
         	result = result + cell_1;
         }
-        cell_1 <<= 1;
-        cell_2 >>= 1;
+        cell_1 = cell_1 << 1;
+        cell_2 = cell_2 >> 1;
     }
 
     return result;
+    //return cell_1*cell_2  a correct result
 }
 
 void  rram::multiply_data()

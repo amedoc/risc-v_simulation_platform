@@ -51,54 +51,105 @@ int sc_main( int argc, char* argv[])
 	  next_cycle(clk);
 
 	  Read_Write = 1; // write operation
-	  addr=0x00 ;  data_in=0x0001; rst=0;
+	  rst=0;		  // reset not enabled
+
+	  addr=0x00 ;  data_in=0x0001;
 	  for (i=0;i<5;i++)
 		  {
 			  next_cycle(clk);
 		  }
 
-	  addr=0x01 ; data_in=0x0003; rst=0;
+	  addr=0x01 ; data_in=0x0003;
 	  for (i=0;i<5;i++)
 		  {
 			  next_cycle(clk);
 		  }
 
-	  addr=0x04 ; data_in=0x0005; rst=0;
+	  addr=0x04 ; data_in=0x0005;
 	  for (i=0;i<5;i++)
 	 		  {
 	 			  next_cycle(clk);
 	 		  }
 
-	  addr=0x05 ; data_in=0x0005; rst=0;
+	  addr=0x05 ; data_in=0x0005;
 	  for (i=0;i<5;i++)
 	  	 	 {
 	  	 		  next_cycle(clk);
 	  	 	 }
 
-	  addr=0x01 ; Read_Write = 0; rst=0;
+	  Read_Write = 0; // Read operation
+	  addr=0x01 ;
 	  for (i=0;i<5;i++)
 	 		  {
 	 			  next_cycle(clk);
 	 		  }
 
-	  addr=0x04 ; rst=0;
+	  addr=0x11 ;
 		  for (i=0;i<5;i++)
 		 		  {
 		 			  next_cycle(clk);
 		 		  }
-	 addr=0x05 ; Read_Write = 0; rst=0;
+	 addr=0x05 ;
 		  for (i=0;i<5;i++)
 		  		 {
 		  		 	 next_cycle(clk);
 		  		 }
-	 addr=0x05 ; Read_Write = 0; rst=1; // resetting the rram to zero
+	 rst=1; // resetting the rram to zero
 		 for (i=0;i<5;i++)
 				 {
 				  	next_cycle(clk);
 				 }
 
+	 Read_Write = 1; // write operation
+	 rst=0;		  // reset not enabled
+
+	addr=0x00 ;  data_in=0x1111;
+		for (i=0;i<5;i++)
+		 	{
+		 		next_cycle(clk);
+		 	}
+	Read_Write = 0; next_cycle(clk); Read_Write = 1;
+	addr=0x01 ; data_in=0x0033;
+		for (i=0;i<5;i++)
+		 	{
+		 		next_cycle(clk);
+		 	}
+	Read_Write = 0; next_cycle(clk); Read_Write = 1;
+	addr=0x08 ;  data_in=0xffff;
+		for (i=0;i<5;i++)
+			 {
+			 	next_cycle(clk);
+			 }
+
+	addr=0x09 ; data_in=0x0004;
+			for (i=0;i<5;i++)
+			 {
+			 	next_cycle(clk);
+			 }
 
 
+	mul_enable = 1;//enable multiplication
+	Read_Write = 0;
+	addr=0x00;
+	for (i=0;i<5;i++)
+	 {
+	 	next_cycle(clk);
+	 }
+	addr=0x01;
+	for (i=0;i<5;i++)
+	 {
+	 	next_cycle(clk);
+	 }
+	addr=0x08;
+	for (i=0;i<5;i++)
+	 {
+	 	next_cycle(clk);
+	 }
+	addr=0x09;
+	for (i=0;i<5;i++)
+	 {
+	 	next_cycle(clk);
+	 }
 
 
 
@@ -111,8 +162,8 @@ int sc_main( int argc, char* argv[])
 
 void next_cycle (sc_signal<bool> &signal_clk)
 {
-    signal_clk = false;
-    sc_start (1, SC_NS);
     signal_clk = true;
+    sc_start (1, SC_NS);
+    signal_clk = false;
     sc_start (1, SC_NS);
 }
