@@ -47,7 +47,7 @@ struct rram : public sc_core::sc_module
 
   //The target (RRAM) should copy data FROM the data array in the bus
   //Writing data in the RRAM
-  void  write_data (unsigned addr,const uint16_t *src, unsigned num_bytes)
+  void  write_data (unsigned addr,const uint8_t *src, unsigned num_bytes)
   {
 	  assert(addr + num_bytes <= m_size); // to test if data sent is not greater to rram size
 
@@ -57,7 +57,7 @@ struct rram : public sc_core::sc_module
 
 //the target (RRAM) should copy data TO the data array in the bus
 // reading from RRAM and writing to the bus
-  void  read_data(unsigned addr, uint16_t* dst, unsigned num_bytes)
+  void  read_data(unsigned addr, uint8_t* dst, unsigned num_bytes)
   {
 
 	  assert(addr + num_bytes <= m_size); // to test if data sent is not greater to rram size
@@ -75,7 +75,7 @@ struct rram : public sc_core::sc_module
 
 	  for(int i=0;i<256;i++)
 	  {
-		  rram_data+i = null_cell;
+		  *(rram_data+i) = null_cell;
 	  }
 
   }
@@ -114,8 +114,8 @@ struct rram : public sc_core::sc_module
       {
       	uint32_t tmp = 0x00000000 ;
         tmp = multiply_two_cells( *(rram_data + i) , *(rram_data + (i+1)) );
-        rram_data + i = tmp & 0xFFFF;
-        rram_data + (i+1) = tmp >> 16;
+        *(rram_data + i) = tmp & 0xFFFF;
+        *(rram_data + (i+1)) = tmp >> 16;
       }
 
   }
@@ -129,9 +129,9 @@ struct rram : public sc_core::sc_module
 																// contiguous block of data being read or written
 																// for RRAM must be 1 byte = 2bits and in VP declared as 4 bytes
 
-		/*auto*/ uint16_t *ptr = trans.get_data_ptr();			//The data pointer attribute points to a data buffer within the initiator(Bus)
+		auto *ptr = trans.get_data_ptr();			//The data pointer attribute points to a data buffer within the initiator(Bus)
 
-		/*auto*/ unsigned len = trans.get_data_length();		// gives the length of data in bytes
+		auto len = trans.get_data_length();		// gives the length of data in bytes
 
 
 
