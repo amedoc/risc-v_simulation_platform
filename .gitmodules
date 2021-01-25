@@ -1,0 +1,4 @@
+[submodule "riscv-vp"]
+	path = riscv-vp
+	url = https://github.com/agra-uni-bremen/riscv-vp
+	branch = master
