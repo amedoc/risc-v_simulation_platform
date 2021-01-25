@@ -1,0 +1,4 @@
+[submodule "riscv-vp"]
+	path = riscv-vp
+	url = https://github.com/amedoc/riscv-vp/
+	branch = master
